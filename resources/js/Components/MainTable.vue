@@ -88,13 +88,11 @@ const updateRowInTable = (updatedRow) => {
                 v-if="actionType == 'info'"
                 :columns="selecteColumns"
                 :row="selectedRow"
-                :type="type"
             />
             <EditBody
                 v-if="actionType == 'edit'"
                 :columns="selecteColumns"
                 :row="selectedRow"
-                :type="type"
                 :allRoles="allRoles"
                 @updateRow="updateRowInTable"
 
@@ -103,8 +101,7 @@ const updateRowInTable = (updatedRow) => {
                 v-if="actionType == 'delete'"
                 :columns="selecteColumns"
                 :row="selectedRow"
-                :type="type"
-                @close="closeEditModal"
+                @close="closeModal"
 
             />
         </template>

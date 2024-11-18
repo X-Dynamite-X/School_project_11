@@ -20,14 +20,16 @@ const props = defineProps({
 
 const updateRowValue = ref({ ...props.row });
 
-const updateField = (field, value) => {
-    updateRowValue.value[field] = value;
-};
-
-// إرسال البيانات المعدلة للمكون الأب عند الطلب
 const emit = defineEmits(["updateRow"]);
+
 const sendUpdatedRow = () => {
     emit("updateRow", updateRowValue.value);
+};
+
+const updateField = ({ field, value }) => {
+    console.log(value);
+
+    updateRowValue.value[field] = value.value; // تحديث القيم في updateRowValue
 };
 </script>
 
@@ -37,15 +39,17 @@ const sendUpdatedRow = () => {
             v-if="column.field !== 'id' && column.field !== 'roles' && !column.isAction"
             :value="updateRowValue[column.field]"
             :label="column.label || column.field"
-            @update="updateField(column.field, $event)"
+            :field="column.label || column.field"
+            @update="value => updateField({ field: column.field, value })"
         />
 
         <SelectInput
             v-if="column.field === 'roles'"
             :value="updateRowValue.roles[0]?.name"
+            :field="column.label || column.field"
             :label="column.label || column.field"
             :options="allRoles"
-            @update="updateField(column.field, $event)"
+            @update="value => updateField({ field: column.field, value })"
         />
     </div>
 </template>
