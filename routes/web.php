@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubjectController;
 
 Route::get('/', function () {
@@ -24,21 +25,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     # shoole Route
-    // Route::prefix("subject")->name("subject.")->controller(SubjectController::class)->group(function () {
-    //     Route::get("/", "index")->name("index");
-    //     Route::get("/{subject}", "show")->name("show");
 
-    //     Route::post("/", "store")->name("store");
-    //     Route::put("/edit/{subject}", "update")->name("update");
-    //     Route::delete("/delete/{subject}", "destroy")->name("destroy");
-    // });
-});
-Route::prefix("subject")->name("subject.")->controller(SubjectController::class)->group(function () {
-    Route::get("/", "index")->name("index");
-    Route::get("/{subject}", "show")->name("show");
 
-    Route::post("/", "store")->name("store");
-    Route::put("/edit/{subject}", "update")->name("update");
-    Route::delete("/delete/{subject}", "destroy")->name("destroy");
+    require __DIR__ . '/appRouts/user.php';
+    require __DIR__ . '/appRouts/subjects.php';
+
 });
+
 require __DIR__ . '/auth.php';

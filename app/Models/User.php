@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    
+
     use HasFactory, Notifiable , HasRoles;
 
     /**
@@ -48,9 +48,10 @@ class User extends Authenticatable
         ];
     }
 
-    public function subjects()
+
+        public function subjects()
     {
         return $this->belongsToMany(Subject::class, 'subject_users')->withPivot('mark');
     }
-    
+
 }

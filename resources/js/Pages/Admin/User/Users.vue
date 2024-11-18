@@ -1,23 +1,27 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-// import InfoIcon from "@/Components/IconSvg/InfoIcon.vue"
-// import EditIcon from "@/Components/IconSvg/EditIcon.vue"
-// import DeleteIcon from "@/Components/IconSvg/DeleteIcon.vue"
-// import BouttonSvg from "@/Components/BouttonSvg.vue"
-const subjectColumns = [
+
+const userColumns = [
   { label: "ID", field: "id" },
-  { label: "Name Subject", field: "name" },
-  { label: "Success Mark", field: "success_mark" },
-  { label: "Full Mark", field: "full_mark" },
+  { label: "Name", field: "name" },
+  { label: "Email", field: "email" },
+  { label: "Role", field: "roles" },
   { label: "Actions", isAction: true },
 ];
+
 import MainTable from "@/Components/MainTable.vue";
 defineProps({
-    subjects: {
+    users: {
         type: Array,
     },
+    allRoles:{
+        type: Array,
+    }
 });
+
+// console.log(users);
+
 
 </script>
 
@@ -26,7 +30,7 @@ defineProps({
     <AuthenticatedLayout >
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <MainTable :tableData ="subjects" :columns="subjectColumns" ></MainTable>
+                <MainTable :tableData ="users" :columns="userColumns" :allRoles="allRoles" type="user"></MainTable>
             </div>
         </div>
     </AuthenticatedLayout>

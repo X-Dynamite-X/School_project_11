@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import Model from "@/Components/Modal.vue";
 </script>
 
 <template>
@@ -14,5 +15,8 @@ import { Head } from '@inertiajs/vue3';
                 Dashboard
             </h2>
         </template>
+        <div class="text-white">
+            
+        </div>
     </AuthenticatedLayout>
 </template>

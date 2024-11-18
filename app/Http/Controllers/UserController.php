@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Subject;
-use Illuminate\Http\Request;
+use App\Models\User;
 use Inertia\Inertia;
-use Inertia\Response;
-class SubjectController extends Controller
+use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,9 @@ class SubjectController extends Controller
     public function index()
     {
         //
-        $subjects = Subject::all();
-        return Inertia::render("Admin/School/Subject",["subjects"=>$subjects]);
+        $users = User::with('roles')->get();
+        $allRoles = Role::all();
+        return Inertia::render("Admin/User/Users",["users"=>$users,"allRoles"=>$allRoles]);
     }
 
     /**
@@ -32,26 +34,20 @@ class SubjectController extends Controller
     public function store(Request $request)
     {
         //
-        $subject = new Subject();
-        $subject->name = $request->input('name');
-        $subject->success_mark = $request->input('success_mark');
-        $subject->full_mark = $request->input("full_mark");
-        $subject->save();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Subject $subject)
+    public function show(User $user)
     {
         //
-        return $subject;
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Subject $subject)
+    public function edit(User $user)
     {
         //
     }
@@ -59,7 +55,7 @@ class SubjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Subject $subject)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -67,7 +63,7 @@ class SubjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Subject $subject)
+    public function destroy(User $user)
     {
         //
     }

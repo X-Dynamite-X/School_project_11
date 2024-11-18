@@ -28,7 +28,6 @@ const showingNavigationDropdown = ref(false);
                                     />
                                 </Link>
                             </div>
-
                             <!-- Navigation Links -->
                             <div
                                 class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
@@ -38,6 +37,18 @@ const showingNavigationDropdown = ref(false);
                                     :active="route().current('dashboard')"
                                 >
                                     Dashboard
+                                </NavLink>
+                                <NavLink v-if=" $page.props.auth.user_role[0] == 'admin'"
+                                    :href="route('user.index')"
+                                    :active="route().current('user.index')"
+                            >
+                                Users
+                                </NavLink>
+                                <NavLink v-if=" $page.props.auth.user_role[0] == 'admin'"
+                                    :href="route('subject.index')"
+                                    :active="route().current('subject.index')"
+                            >
+                                Subjects
                                 </NavLink>
                             </div>
                         </div>
@@ -145,6 +156,18 @@ const showingNavigationDropdown = ref(false);
                             :active="route().current('dashboard')"
                         >
                             Dashboard
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink v-if=" $page.props.auth.user_role[0] == 'admin'"
+                            :href="route('user.index')"
+                            :active="route().current('user.index')"
+                        >
+                            User
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink v-if=" $page.props.auth.user_role[0] == 'admin'"
+                            :href="route('subject.index')"
+                            :active="route().current('subject.index')"
+                        >
+                            Subject
                         </ResponsiveNavLink>
                     </div>
 
