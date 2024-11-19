@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\SubjectUser;
+use App\Http\Controllers\Controller;
+use App\Models\Subject;
 use Illuminate\Http\Request;
-
-class SubjectUserController extends Controller
+use Inertia\Inertia;
+use Inertia\Response;
+class SubjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,6 +15,8 @@ class SubjectUserController extends Controller
     public function index()
     {
         //
+        $subjects = Subject::all();
+        return Inertia::render("Admin/School/Subject",["subjects"=>$subjects]);
     }
 
     /**
@@ -29,20 +33,26 @@ class SubjectUserController extends Controller
     public function store(Request $request)
     {
         //
+        $subject = new Subject();
+        $subject->name = $request->input('name');
+        $subject->success_mark = $request->input('success_mark');
+        $subject->full_mark = $request->input("full_mark");
+        $subject->save();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(SubjectUser $subjectUser)
+    public function show(Subject $subject)
     {
         //
+        return $subject;
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SubjectUser $subjectUser)
+    public function edit(Subject $subject)
     {
         //
     }
@@ -50,7 +60,7 @@ class SubjectUserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SubjectUser $subjectUser)
+    public function update(Request $request, Subject $subject)
     {
         //
     }
@@ -58,7 +68,7 @@ class SubjectUserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SubjectUser $subjectUser)
+    public function destroy(Subject $subject)
     {
         //
     }
