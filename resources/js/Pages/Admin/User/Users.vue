@@ -3,10 +3,10 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 
 const userColumns = [
-  { label: "ID", field: "id" },
-  { label: "Name", field: "name" },
-  { label: "Email", field: "email" },
-  { label: "Role", field: "roles" },
+  { label: "ID", field: "id",name: "id"},
+  { label: "Name", field: "name" ,name: "name",type: "text"},
+  { label: "Email", field: "email" ,name: "email",type: "email"},
+  { label: "Role", field: "roles" ,name: "roles",type: "select"},
   { label: "Actions", isAction: true },
 ];
 

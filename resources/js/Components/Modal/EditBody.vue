@@ -1,7 +1,8 @@
 <script setup>
-import { ref } from "vue";
+import { ref ,reactive, onMounted} from "vue";
 import TextInput from "@/Components/Form/TextInput.vue";
 import SelectInput from "@/Components/Form/SelectInput.vue";
+// import { router } from '@inertiajs/vue3'
 
 const props = defineProps({
     row: {
@@ -17,6 +18,17 @@ const props = defineProps({
         required: true,
     },
 });
+const form = reactive({});
+
+onMounted(() => {
+  // ملء form باستخدام البيانات الموجودة في row وفقًا للأعمدة (columns)
+  props.columns.forEach((column) => {
+    if (column.name && props.row[column.name] !== undefined) {
+      form[column.name] = props.row[column.name];
+    }
+  });
+});
+
 
 const updateRowValue = ref({ ...props.row });
 
@@ -26,11 +38,13 @@ const sendUpdatedRow = () => {
     emit("updateRow", updateRowValue.value);
 };
 
+// دالة لتحديث القيم في النموذج
 const updateField = ({ field, value }) => {
-    console.log(value);
-
-    updateRowValue.value[field] = value.value; // تحديث القيم في updateRowValue
+  form[field] = value; // تحديث قيمة الحقل في الـ form
+  console.log(form); // طباعة الشكل النهائي للنموذج بعد التحديث
 };
+
+
 </script>
 
 <template>
@@ -38,8 +52,7 @@ const updateField = ({ field, value }) => {
         <TextInput
             v-if="column.field !== 'id' && column.field !== 'roles' && !column.isAction"
             :value="updateRowValue[column.field]"
-            :label="column.label || column.field"
-            :field="column.label || column.field"
+            :column="column"
             @update="value => updateField({ field: column.field, value })"
         />
 
