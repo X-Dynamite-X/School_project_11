@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\Admin\SubjectController;
 
 Route::prefix("subject")->name("subject.")->controller(SubjectController::class)->group(function () {
     Route::get("/", "index")->name("index");
