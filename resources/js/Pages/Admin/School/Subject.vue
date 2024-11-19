@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head , ref } from '@inertiajs/vue3';
+import { Head  } from '@inertiajs/vue3';
 import MainTable from "@/Components/MainTable.vue";
 const subjectColumns = [
   { label: "ID", field: "id" },
@@ -14,7 +14,7 @@ defineProps({
         type: Array,
     },
 });
-    
+
 </script>
 
 <template>

@@ -23,11 +23,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     # shoole Route
-
-
+});
+Route::middleware(["auth","role:admin"])->group(function(){
     require __DIR__ . '/appRouts/user.php';
     require __DIR__ . '/appRouts/subjects.php';
-
 });
-
 require __DIR__ . '/auth.php';
