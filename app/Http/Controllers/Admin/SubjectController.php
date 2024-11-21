@@ -16,7 +16,7 @@ class SubjectController extends Controller
     {
         //
         $subjects = Subject::all();
-        return Inertia::render("Admin/School/Subject",["subjects"=>$subjects]);
+        return Inertia::render("Admin/Subject",["subjects"=>$subjects]);
     }
 
     /**

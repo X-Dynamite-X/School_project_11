@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\SubjectUser;
 use Illuminate\Http\Request;
-
+use \Inertia\Inertia;
 class SubjectUserController extends Controller
 {
     /**
@@ -14,6 +14,9 @@ class SubjectUserController extends Controller
     public function index()
     {
         //
+        $subject_users = SubjectUser::all();
+        return Inertia::render("Admin/SubjectUser",["subject_users"=>$subject_users]);
+
     }
 
     /**

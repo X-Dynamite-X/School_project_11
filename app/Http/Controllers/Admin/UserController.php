@@ -21,7 +21,7 @@ class UserController extends Controller
         //
         $users = User::with('roles')->get();
         $allRoles = Role::all();
-        return Inertia::render("Admin/User/Users",["users"=>$users,"allRoles"=>$allRoles]);
+        return Inertia::render("Admin/Users",["users"=>$users,"allRoles"=>$allRoles]);
     }
 
     /**

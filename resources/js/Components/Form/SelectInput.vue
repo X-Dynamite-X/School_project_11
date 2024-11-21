@@ -6,6 +6,7 @@ const props  = defineProps({
     options: { type: Array, default: () => [] },
     field: { type: String, required: true },
     value: { type: [String, Number], required: true },
+    multiple:{type:Boolean , default:false }
 });
 
 const emit = defineEmits(["update"]);
@@ -25,7 +26,7 @@ const sendData = (event) => {
     <select
         :value="value"
         @change="sendData"
-        
+        :multiple="multiple"
         :name="field"
         class="block w-full px-3 py-2 border rounded-md text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 focus:outline-none"
     >

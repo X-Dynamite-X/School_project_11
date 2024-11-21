@@ -70,6 +70,7 @@ const closeModal = () => {
                 value: form[`${column.field}_id`], // الربط مع role_id
                 field: column.name,
                 label: column.label,
+                multiple: column.multiple,
                 options: allRoles
             }"
             @update="value => updateField({ field: column.field, value })"
