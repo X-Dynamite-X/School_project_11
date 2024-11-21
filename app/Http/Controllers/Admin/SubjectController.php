@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Subject;
-use Illuminate\Http\Request;
+use App\Models\User;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Subject;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
 class SubjectController extends Controller
 {
     /**
@@ -15,8 +17,13 @@ class SubjectController extends Controller
     public function index()
     {
         //
-        $subjects = Subject::all();
-        return Inertia::render("Admin/Subject",["subjects"=>$subjects]);
+        $subjects = Subject::all()->load("users");;
+        $users = User::all();
+        // $subject_users = Subject::with("users")->get();
+        // $subject_users = $subjects->load("users");
+
+        // dd($subject_users[0]->users[0]);
+        return Inertia::render("Admin/Subject",["subjects"=>$subjects,"users"=>$users]);
     }
 
     /**
