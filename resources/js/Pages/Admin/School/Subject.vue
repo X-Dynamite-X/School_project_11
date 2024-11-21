@@ -9,6 +9,11 @@ const subjectColumns = [
   { label: "Full Mark", field: "full_mark",name: "full_mark",type: "number" },
   { label: "Actions", isAction: true },
 ];
+const subjectForm = [
+   { label: "Name Subject", field: "name"  ,name: "name",type: "text" },
+  { label: "Success Mark", field: "success_mark",name: "success_mark",type: "number",},
+  { label: "Full Mark", field: "full_mark",name: "full_mark",type: "number" },
+ ];
 defineProps({
     subjects: {
         type: Array,
@@ -25,7 +30,10 @@ defineProps({
                 <MainTable
                     :tableData ="subjects"
                     :columns="subjectColumns"
-                    type="subject" ></MainTable>
+                    :formsFeldData="subjectForm"
+                    nameRoute="subject"
+
+                ></MainTable>
             </div>
         </div>
     </AuthenticatedLayout>

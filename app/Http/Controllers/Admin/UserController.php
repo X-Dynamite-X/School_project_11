@@ -7,6 +7,9 @@ use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use App\Http\Requests\Admin\User\StoreRequest;
+use App\Http\Requests\Admin\User\UpdateRequest;
+
 
 class UserController extends Controller
 {
@@ -24,41 +27,33 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
-    }
+        // dd($request->all());
+        $user = User::create($request->all());
+        // dd($request->roles[0]["name"]);
+        if($request->roles[0]["name"]){
+            $user->assignRole($request->roles[0]["name"]);
+        } else{
+            $user->assignRole("user");
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        //
-    }
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
-    {
-        //
+        // dd($user);
+        return to_route('user.index');
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, User $user)
+    public function update(UpdateRequest $request, User $user)
     {
-        //
+         $user->update(
+            $request->all()
+        );
+        if($request->roles_name){
+
+            $user->syncRoles($request->roles_name);
+        }
+        $user->save();
+        return to_route('user.index');
     }
 
     /**
@@ -67,5 +62,8 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+        $user->delete();
+        return to_route('user.index');
+
     }
 }

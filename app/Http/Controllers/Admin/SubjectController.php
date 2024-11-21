@@ -33,36 +33,21 @@ class SubjectController extends Controller
     public function store(Request $request)
     {
         //
-        $subject = new Subject();
-        $subject->name = $request->input('name');
-        $subject->success_mark = $request->input('success_mark');
-        $subject->full_mark = $request->input("full_mark");
-        $subject->save();
+        Subject::create($request->all());
+        return to_route('subject.index');
+
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Subject $subject)
-    {
-        //
-        return $subject;
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Subject $subject)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Subject $subject)
     {
         //
+        $subject->update(
+            $request->all()
+        );
+        $subject->save();
+        return to_route('subject.index');
+
     }
 
     /**
@@ -71,5 +56,8 @@ class SubjectController extends Controller
     public function destroy(Subject $subject)
     {
         //
+        $subject->delete();
+        return to_route('subject.index');
+
     }
 }

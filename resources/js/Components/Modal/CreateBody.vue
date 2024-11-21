@@ -7,6 +7,8 @@ const props = defineProps({
     row: { type: Object, required: true },
     columns: { type: Array, required: true },
     allRoles: { type: Array, required: true },
+    formFeld: { type: Array, required: true },
+
 });
 
 const emit = defineEmits(["close", "updateRow"]);
@@ -17,39 +19,27 @@ const isVisible = ref(true);
 
 // تجهيز النموذج عند التحميل
 onMounted(() => {
-    props.columns.forEach((column) => {
-        if (column.name && props.row[column.name] !== undefined) {
-            if (column.type === "select" && Array.isArray(props.row[column.name])) {
-                const role = props.row[column.name][0];
-                form[`${column.name}_id`] = role?.id || null; // role_id
-                form[`${column.name}_name`] = role?.name || ""; // role_name
-            } else {
-                form[column.name] = props.row[column.name];
-            }
+    props.formFeld.forEach((column) => {
+        if (column.name) {
+            form[column.name] = ""; // تعيين القيم الافتراضية
         }
     });
 });
 
-// إرسال البيانات المحدثة
-const sendUpdatedRow = () => {
-    // نسخ البيانات وتبسيطها لتجنب أي مشاكل
+ const sendCreateRow = () => {
     const sanitizedData = JSON.parse(JSON.stringify(form));
     console.log("Sanitized Data:", sanitizedData);
+    console.log("form", form);
 
-    // إرسال البيانات المحدثة
-    emit("updateRow", sanitizedData);
+    emit("createRow", form);
 };
 
-// تحديث الحقل عند تغييره
 const updateField = ({ field, value }) => {
     if (field === "roles") {
         if (!Array.isArray(form.roles)) {
             form.roles = []; // تأكد أن الحقل `roles` هو مصفوفة
         }
-        console.log(value.name);
-
-        form[`${field}_name`]=value.name;
-         form.roles.push(value); // إضافة العنصر الجديد إلى المصفوفة
+        form.roles.push(value); // إضافة العنصر الجديد إلى المصفوفة
         console.log(form.roles);
     } else {
         form[field] = value.value; // تحديث الحقول الأخرى
@@ -65,7 +55,7 @@ const closeModal = () => {
 </script>
 
 <template>
-    <div v-for="(column, index) in columns" :key="index">
+    <div v-for="(column, index) in formFeld" :key="index">
         <TextInput
             v-if="column.field !== 'id' && column.field !== 'roles' && !column.isAction"
             v-bind="{
@@ -86,7 +76,7 @@ const closeModal = () => {
         />
     </div>
     <footer class="mt-4 flex justify-end space-x-2">
-        <button @click="sendUpdatedRow" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+        <button @click="sendCreateRow" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
             Save
         </button>
         <button @click="closeModal" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">

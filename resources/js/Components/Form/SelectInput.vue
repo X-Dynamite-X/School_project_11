@@ -25,6 +25,7 @@ const sendData = (event) => {
     <select
         :value="value"
         @change="sendData"
+        
         :name="field"
         class="block w-full px-3 py-2 border rounded-md text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 focus:outline-none"
     >

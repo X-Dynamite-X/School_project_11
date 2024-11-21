@@ -1,14 +1,14 @@
 <script setup>
-import { defineProps, defineEmits, ref, watch } from "vue";
+import { defineProps, defineEmits, ref } from "vue";
 
 // تعريف الخصائص
 const props = defineProps({
     value: { type: [String, Number], required: true },
-    column: { type: Object, required: true }
-});
+    column: { type: Object, required: true },
+ });
 
 // إعداد القيم
-const type_input = ref(props.column.type || 'text');
+const type_input = ref(props.column.type || "text");
 const name_input = ref(props.column.name);
 const label_input = ref(props.column.label);
 const field_input = ref(props.column.field);
@@ -24,7 +24,9 @@ const sendData = (event) => {
 </script>
 
 <template>
-  <label :for="name_input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ label_input }}</label>
+  <label :for="name_input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+    {{ label_input }}
+  </label>
   <input
     :type="type_input"
     :id="name_input"
@@ -34,4 +36,6 @@ const sendData = (event) => {
     @input="sendData"
     class="block w-full px-3 py-2 border rounded-md text-gray-900 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 focus:outline-none"
   />
-</template>
+  <!-- عرض الخطأ -->
+  <p v-if="$page.props.errors[field_input] " class="text-red-500 text-sm mt-1"> {{ $page.props.errors[field_input] }}</p>
+ </template>

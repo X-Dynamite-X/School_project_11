@@ -21,11 +21,11 @@ class UpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        // dd($this->user->id);
         return [
             'name' => 'required|string|max:255',
-            "email" => 'required|email|unique:email,name,'.$this->category->id,
-            'password' => 'required|string|min:3|confirmed',
-        ];
+            "email" => 'required|email|unique:users,email,'.$this->user->id,
+         ];
     }
     public function messages(): array
     {
@@ -33,7 +33,6 @@ class UpdateRequest extends FormRequest
             'name.required' => 'The name field is required',
             'email.required' => 'The email field is required',
             'email.unique' => 'The email field is already exist',
-            'password.confirmed' => 'The password confirmation does not match.',
         ];
     }
 }
