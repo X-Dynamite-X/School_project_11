@@ -7,6 +7,7 @@ const props = defineProps({
     row: { type: Object, required: true },
     columns: { type: Array, required: true },
     allRoles: { type: Array, required: true },
+    disabelsFeild:{type:Boolean,default:false}
 });
 
 const emit = defineEmits(["close", "updateRow"]);
@@ -22,8 +23,11 @@ onMounted(() => {
             if (column.type === "select" && Array.isArray(props.row[column.name])) {
                 const role = props.row[column.name][0];
                 form[`${column.name}_id`] = role?.id || null; // role_id
-                form[`${column.name}_name`] = role?.name || ""; // role_name
-            } else {
+             }
+             else if (column.name == "mark"){
+                form.pivot.mark = props.row.pivot.mark;
+            }
+            else {
                 form[column.name] = props.row[column.name];
             }
         }
@@ -45,17 +49,12 @@ const updateField = ({ field, value }) => {
         if (!Array.isArray(form.roles)) {
             form.roles = []; // تأكد أن الحقل `roles` هو مصفوفة
         }
-
-
         form[`${field}_name`]=value.name;
          form.roles.push(value); // إضافة العنصر الجديد إلى المصفوفة
-
     } else {
         form[field] = value.value; // تحديث الحقول الأخرى
     }
 };
-
-
 // إغلاق النموذج
 const closeModal = () => {
     isVisible.value = false;
@@ -68,10 +67,9 @@ const closeModal = () => {
         <TextInput
             v-if="column.field !== 'id' && column.field !== 'roles' && !column.isAction"
             v-bind="{
-                value: form[column.name],
-                column: column
-
-            }"
+                value: column.field ==='pivot.mark'? form.pivot.mark : form[column.field]  ,
+                 column: column,
+             }"
             @update="value => updateField({ field: column.name, value })"
         />
         <SelectInput
@@ -84,6 +82,7 @@ const closeModal = () => {
             }"
             @update="value => updateField({ field: column.field, value })"
         />
+        {{ column }}
     </div>
     <footer class="mt-4 flex justify-end space-x-2">
         <button @click="sendUpdatedRow" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">

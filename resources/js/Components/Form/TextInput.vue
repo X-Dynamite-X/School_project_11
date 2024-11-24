@@ -5,7 +5,7 @@ import { defineProps, defineEmits, ref } from "vue";
 const props = defineProps({
     value: { type: [String, Number], required: true },
     column: { type: Object, required: true },
- });
+  });
 
 // إعداد القيم
 const type_input = ref(props.column.type || "text");
@@ -30,7 +30,8 @@ const sendData = (event) => {
   <input
     :type="type_input"
     :id="name_input"
-    :placeholder="'Please Edit ' + label_input + ' data'"
+     :placeholder="'Please Edit ' + label_input + ' data'"
+
     v-bind="{ name: name_input, value: value_input }"
     v-model="value_input"
     @input="sendData"

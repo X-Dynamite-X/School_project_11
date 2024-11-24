@@ -1,27 +1,25 @@
 <script setup>
 import { defineProps, ref } from "vue";
 import { router, useForm } from "@inertiajs/vue3";
-import TableHeader from "@/Components/Table/TableHeader.vue";
-import TableRow from "@/Components/Table/TableRow.vue";
+import TableHeader from "@/Components/Modal/Tabel/TableHeader.vue";
+import TableRow from "@/Components/Modal/Tabel/TableRow.vue";
 import DynamicModal from "@/Components/Modal/DynamicModal.vue";
-import InfoBody from "./Modal/InfoBody.vue";
-import InfoTabelModal from "./Modal/InfoTabelModal.vue";
-
-import EditBody from "./Modal/EditBody.vue";
-import DeleteBody from "./Modal/DeleteBody.vue";
-import CreateBody from "./Modal/CreateBody.vue";
+import InfoBody from "@/Components/Modal/Tabel/Modal/InfoBody.vue";
+import EditBody from "@/Components/Modal/Tabel/Modal/EditBody.vue";
+import DeleteBody from "@/Components/Modal/Tabel/Modal/DeleteBody.vue";
+import CreateBody from "@/Components/Modal/Tabel/Modal/CreateBody.vue";
 import CreateIcon from "@/Components/IconSvg/CreateIcon.vue";
 
 const props = defineProps({
     tableData: { type: Array, required: true },
     columns: { type: Array, required: true },
-    allRoles: { type: Array, default: null },
     nameRoute: { type: String, default: null },
     formsFeldData: { type: Array, default: null },
     formsFeldModelData:{type:Array,default:null},
-    columnsModal:{type:Array,default:null},
-    nameRouteModel:{type:String,default:null}
+    columnsModal:{type:Array,default:null}
+
 });
+
 const selectedRow = ref(null);
 const selectedColumns = ref(null);
 const actionType = ref("");
@@ -40,9 +38,6 @@ const openCreateModal = ({ actionType: action, row, columns ,formsFeldData}) => 
 const closeModal = () => {
     selectedRow.value = null;
     actionType.value = "";
-};
-const handleConfirm = () => {
-    updateRowInTable(selectedRow.value);
 };
 const updateRowInTable = (updatedRow) => {
     const formCreate = useForm({ ...updatedRow });
@@ -77,9 +72,10 @@ const deleteRowInTable = (rowId) => {
             class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-600"
         >
             <TableRow
-                v-for="(row, index) in tableData"
+                v-for="(row, index) in tableData.users"
                 :key="index"
                 :row="row"
+                :rowName="tableData.name"
                 :columns="columns"
                 @action-click="openModal"
             />
@@ -88,29 +84,18 @@ const deleteRowInTable = (rowId) => {
     <DynamicModal
         v-if="selectedRow"
         :title="actionType"
-        :nameRouteModel="props.nameRouteModel"
         @close="closeModal"
-        @confirmAction="handleConfirm"
-        :style="'min-w-[80%] max-w-[80%] w-full'"
-        :titleModel="selectedRow.name"
-
     >
         <template #content>
             <InfoBody
-                v-if="actionType === 'info'&& !props.tableModalData  && !props.columnsModal  "
+                v-if="actionType === 'info'  "
                 :columns="selectedColumns"
-                :row="selectedRow"
-            />
-            <InfoTabelModal
-                v-if="actionType === 'info' &&props.formsFeldModelData &&props.columnsModal"
-                :columns="props.columnsModal"
-                :row="selectedRow"
-                :formFeld="props.formsFeldModelData"
-                :nameRoute="props.nameRouteModel"
 
-                @close="closeModal"
+                :rowList="selectedRow.users"
+                :row="selectedRow"
+                :rowName="selectedRow.name"
             />
-            <CreateBody
+             <CreateBody
                 v-if="actionType === 'create'"
                 :columns="selectedColumns"
                 :allRoles="allRoles"

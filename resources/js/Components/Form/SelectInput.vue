@@ -13,7 +13,6 @@ const emit = defineEmits(["update"]);
 
 const sendData = (event) => {
     const selectedOption = props.options.find(option => option.id === parseInt(event.target.value));
-    console.log(selectedOption);
 
     emit("update", { id: selectedOption?.id || null, name: selectedOption?.name || "" });
 };

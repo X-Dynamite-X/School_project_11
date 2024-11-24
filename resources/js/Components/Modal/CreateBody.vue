@@ -28,8 +28,7 @@ onMounted(() => {
 
  const sendCreateRow = () => {
     const sanitizedData = JSON.parse(JSON.stringify(form));
-    console.log("Sanitized Data:", sanitizedData);
-    console.log("form", form);
+
 
     emit("createRow", form);
 };
@@ -40,7 +39,6 @@ const updateField = ({ field, value }) => {
             form.roles = []; // تأكد أن الحقل `roles` هو مصفوفة
         }
         form.roles.push(value); // إضافة العنصر الجديد إلى المصفوفة
-        console.log(form.roles);
     } else {
         form[field] = value.value; // تحديث الحقول الأخرى
     }

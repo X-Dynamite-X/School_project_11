@@ -25,8 +25,6 @@ defineProps({
     }
 });
 
-// console.log(users);
-
 
 </script>
 

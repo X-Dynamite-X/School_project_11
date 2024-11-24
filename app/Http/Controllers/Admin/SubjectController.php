@@ -19,10 +19,6 @@ class SubjectController extends Controller
         //
         $subjects = Subject::all()->load("users");;
         $users = User::all();
-        // $subject_users = Subject::with("users")->get();
-        // $subject_users = $subjects->load("users");
-
-        // dd($subject_users[0]->users[0]);
         return Inertia::render("Admin/Subject",["subjects"=>$subjects,"users"=>$users]);
     }
 
