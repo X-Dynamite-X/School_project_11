@@ -2,13 +2,11 @@
 import { ref, reactive, onMounted } from "vue";
 import TextInput from "@/Components/Form/TextInput.vue";
 import SelectInput from "@/Components/Form/SelectInput.vue";
-
 const props = defineProps({
     row: { type: Object, required: true },
     columns: { type: Array, required: true },
     allRoles: { type: Array, required: true },
     formFeld: { type: Array, required: true },
-
 });
 
 const emit = defineEmits(["close", "updateRow"]);
@@ -16,6 +14,8 @@ const emit = defineEmits(["close", "updateRow"]);
 // نموذج البيانات
 const form = reactive({ ...props.row });
 const isVisible = ref(true);
+console.log(props.allRoles);
+
 
 // تجهيز النموذج عند التحميل
 onMounted(() => {
@@ -26,7 +26,7 @@ onMounted(() => {
     });
 });
 
- const sendCreateRow = () => {
+const sendCreateRow = () => {
     const sanitizedData = JSON.parse(JSON.stringify(form));
 
     emit("createRow", form);
@@ -53,19 +53,12 @@ const closeModal = () => {
 
 <template>
     <div v-for="(column, index) in formFeld" :key="index">
-        <TextInput
-            v-if="column.field !== 'id' && column.field !== 'roles' && !column.isAction"
-            v-bind="{
-                value: form[column.name],
-                column: column
-            }"
-            @update="value => updateField({ field: column.name, value })"
-        />
+
         <SelectInput
-            v-if="column.field === 'roles'"
+            v-if="column.name === 'user_ids' &&  column.type === 'select'"
             v-bind="{
-                value: form[`${column.field}_id`], // الربط مع role_id
-                field: column.name,
+                value: form[`${column.name}_id`], // الربط مع role_id
+                name: column.name,
                 label: column.label,
                 multiple: column.multiple,
                 options: allRoles
@@ -73,7 +66,8 @@ const closeModal = () => {
             @update="value => updateField({ field: column.field, value })"
         />
     </div>
-    <footer class="mt-4 flex justify-end space-x-2">
+
+     <footer class="mt-4 flex justify-end space-x-2">
         <button @click="sendCreateRow" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
             Save
         </button>

@@ -16,7 +16,9 @@ const props = defineProps({
     nameRoute: { type: String, default: null },
     formsFeldData: { type: Array, default: null },
     formsFeldModelData:{type:Array,default:null},
+    listData:{type:Array,default:null},
     columnsModal:{type:Array,default:null}
+
 
 });
 
@@ -24,16 +26,21 @@ const selectedRow = ref(null);
 const selectedColumns = ref(null);
 const actionType = ref("");
 const selectedForms = ref(null);
+const selectedFormsModel = ref(null);
 const openModal = ({ actionType: action, row, columns }) => {
     actionType.value = action;
     selectedRow.value = { ...row };
     selectedColumns.value = [...columns];
   };
-const openCreateModal = ({ actionType: action, row, columns ,formsFeldData}) => {
+const openCreateModal = ({ actionType: action, row, columns ,formsFeldData ,listsData }) => {
+    console.log(listsData);
+
     actionType.value = action;
     selectedRow.value = { ...row };
     selectedColumns.value = [...columns];
     selectedForms.value = [...formsFeldData];
+    selectedFormsModel.value = [...listsData];
+
 };
 const closeModal = () => {
     selectedRow.value = null;
@@ -90,7 +97,6 @@ const deleteRowInTable = (rowId) => {
             <InfoBody
                 v-if="actionType === 'info'  "
                 :columns="selectedColumns"
-
                 :rowList="selectedRow.users"
                 :row="selectedRow"
                 :rowName="selectedRow.name"
@@ -98,7 +104,7 @@ const deleteRowInTable = (rowId) => {
              <CreateBody
                 v-if="actionType === 'create'"
                 :columns="selectedColumns"
-                :allRoles="allRoles"
+                :allRoles="selectedFormsModel"
                 :formFeld="selectedForms"
                 @createRow="createRowInTable"
                 @close="closeModal"
@@ -129,6 +135,7 @@ const deleteRowInTable = (rowId) => {
                 row: null,
                 columns: columns,
                 formsFeldData: formsFeldData,
+                listsData:listData
             })
         "
         class="fixed bottom-4 right-4 flex items-center justify-center w-12 h-12 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"

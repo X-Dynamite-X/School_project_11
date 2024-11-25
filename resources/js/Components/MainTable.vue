@@ -16,6 +16,7 @@ const props = defineProps({
     tableData: { type: Array, required: true },
     columns: { type: Array, required: true },
     allRoles: { type: Array, default: null },
+    allUsers: { type: Array, default: null },
     nameRoute: { type: String, default: null },
     formsFeldData: { type: Array, default: null },
     formsFeldModelData:{type:Array,default:null},
@@ -105,6 +106,7 @@ const deleteRowInTable = (rowId) => {
                 v-if="actionType === 'info' &&props.formsFeldModelData &&props.columnsModal"
                 :columns="props.columnsModal"
                 :row="selectedRow"
+                :listData="props.allUsers"
                 :formFeld="props.formsFeldModelData"
                 :nameRoute="props.nameRouteModel"
 

@@ -32,6 +32,9 @@ defineProps({
     subjects: {
         type: Array,
     },
+    users:{
+        type: Array,
+    }
 });
 
 </script>
@@ -47,6 +50,7 @@ defineProps({
                     :formsFeldData="subjectForm"
                     :formsFeldModelData="subjectUserModelForm"
                     :columnsModal="subjectUserModelColumns"
+                    :allUsers="users"
                     nameRouteModel="subjectUsers"
                     nameRoute="subject"
 
